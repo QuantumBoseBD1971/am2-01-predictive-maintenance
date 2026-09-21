@@ -1,0 +1,17 @@
+project:
+  name: am2-01-predictive-maintenance
+  random_state: 42
+
+data:
+  uci_dataset_id: 601
+  target: machine_failure
+  test_size: 0.20
+
+evaluation:
+  primary_metric: average_precision
+  secondary_metrics:
+    - recall
+    - precision
+    - f1
+    - roc_auc
+    - brier_score
