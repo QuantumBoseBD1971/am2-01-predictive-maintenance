@@ -2,7 +2,7 @@
 
 A comparative machine-learning project for predictive maintenance using the **UCI AI4I 2020 Predictive Maintenance Dataset**.
 
-The project demonstrates an end-to-end supervised-learning workflow: reproducible data acquisition, EDA, comparative modelling, cross-validation, probability calibration, threshold/cost analysis, explainability, robustness testing and CI.
+This repository demonstrates an end-to-end supervised AI-engineering workflow: reproducible data acquisition, EDA, comparative modelling, cross-validation, probability calibration, threshold/cost analysis, explainability, robustness, experiment tracking, CI and deployment design.
 
 ## Project question
 
@@ -28,11 +28,9 @@ The raw dataset is downloaded reproducibly and is not committed.
 - Random forest
 - Gradient boosting
 
-Optional extensions include XGBoost/LightGBM and a compact neural-network classifier.
-
 ## Evaluation strategy
 
-The project currently includes:
+The project includes:
 
 - precision, recall and F1
 - ROC-AUC
@@ -63,17 +61,30 @@ python scripts/run_eda.py
 python scripts/train_baseline.py
 python scripts/benchmark_cv.py
 python scripts/run_phase3_analysis.py
+python scripts/finalise_project.py
 pytest
 ```
 
 Generated outputs are written under `results/` and excluded from version control.
 
+## Documentation
+
+- `docs/dataset.md` — data source and leakage considerations
+- `docs/methodology.md` — baseline methodology
+- `docs/phase2_eda_benchmarking.md` — EDA and CV design
+- `docs/phase3_calibration_explainability.md` — calibration, thresholds and robustness
+- `docs/model_card.md` — intended use, limitations and risks
+- `docs/deployment_mlops.md` — productionisation, monitoring and rollback
+- `docs/final_summary.md` — concise end-to-end project summary
+- `docs/final_reflection.md` — learning and AM2 reflection
+- `docs/am2_evidence.md` — consolidated evidence map
+
 ## Development status
 
 - **Phase 1 — complete:** package scaffold, reproducible data acquisition, baseline pipeline, CI and tests.
-- **Phase 2 — complete:** EDA, class-imbalance diagnostics and stratified cross-validation.
-- **Phase 3 — in progress:** calibration, threshold/cost analysis, explainability and robustness.
-- **Phase 4 — planned:** experiment tracking, model card, final comparison and AM2 evidence synthesis.
+- **Phase 2 — complete:** EDA, class imbalance and stratified cross-validation.
+- **Phase 3 — complete:** calibration, threshold/cost analysis, explainability and robustness.
+- **Phase 4 — complete:** experiment tracking, model card, MLOps design and AM2 evidence synthesis.
 
 ## Responsible use
 
