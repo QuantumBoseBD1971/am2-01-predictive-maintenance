@@ -1,28 +1,47 @@
 # AM2 Evidence Notes
 
-This document is a working evidence map and is updated as the project develops.
+This repository is a self-contained AM2 portfolio example demonstrating the engineering lifecycle of an imbalanced supervised-learning system.
 
 ## Problem framing
 
-Predictive maintenance is formulated as an imbalanced supervised binary-classification problem.
+Predictive maintenance is formulated as a binary classification problem where the positive class is rare and false negatives may be operationally expensive.
 
 ## Data engineering
 
-The repository demonstrates reproducible source acquisition, column normalisation, local persistence, integrity checks and deterministic loading.
+Evidence includes:
+
+- reproducible public-data acquisition
+- column normalisation
+- local persistence
+- integrity checks
+- deterministic loading
+- identifier/leakage considerations
 
 ## Exploratory analysis
 
-The automated EDA quantifies class prevalence, missingness, duplicates and numeric-feature distributions before model interpretation.
+The automated EDA quantifies:
+
+- class prevalence
+- missingness
+- duplicates
+- numeric feature distributions
 
 ## Model development
 
-A common preprocessing pipeline benchmarks a dummy baseline, logistic regression, random forest and gradient boosting.
+The common pipeline benchmarks:
+
+- dummy prior classifier
+- logistic regression
+- random forest
+- gradient boosting
+
+This supports comparison between simple/interpretable and more flexible nonlinear models.
 
 ## Evaluation
 
 The project uses:
 
-- stratified cross-validation
+- stratified 5-fold cross-validation
 - precision
 - recall
 - F1
@@ -30,52 +49,55 @@ The project uses:
 - average precision
 - Brier score
 
-This avoids using accuracy as the primary decision criterion in an imbalanced problem.
+Accuracy is not the primary criterion because of target imbalance.
 
 ## Calibration and decision thresholds
 
 The project compares uncalibrated and sigmoid-calibrated probabilities.
 
-Threshold selection is explicitly separated from model training and is driven by an illustrative false-negative vs false-positive cost ratio.
+It separates probability estimation from the operational threshold and demonstrates threshold selection under an explicit illustrative cost model.
 
 ## Explainability
 
-Permutation importance provides model-agnostic feature influence estimates on held-out data.
+Permutation importance is calculated on held-out data using average precision as the scoring function.
 
 ## Robustness
 
-Repeated stratified hold-out splits test whether model performance is overly dependent on one random partition.
+Repeated stratified hold-out splits test whether conclusions are sensitive to one random partition.
 
-## Reproducibility
+## Experiment tracking
 
-The project uses:
+A lightweight immutable JSONL experiment registry records:
 
-- packaged Python source
-- declared dependencies
-- fixed seeds
-- tests
-- GitHub Actions CI
-- reproducible scripts
-- generated result artefacts
+- run id
+- timestamp
+- experiment
+- model
+- parameters
+- metrics
+- notes
+
+The design can later be migrated to a full model registry such as MLflow.
+
+## MLOps and deployment
+
+The documented production design covers:
+
+- packaging
+- model/version metadata
+- immutable artefacts
+- champion aliasing rather than overwriting models
+- monitoring
+- drift
+- promotion
+- rollback
 
 ## Responsible AI and limitations
 
-The dataset is synthetic and cannot establish real industrial safety performance.
+The dataset is synthetic and therefore does not establish safety or effectiveness on real equipment.
 
-A real deployment would additionally require:
+A real deployment would require representative operational data, domain-expert review, time-aware validation, approved maintenance costs, drift monitoring and human oversight.
 
-- representative machinery data
-- domain-expert review
-- explicit maintenance/safety cost modelling
-- drift monitoring
-- uncertainty monitoring
-- human oversight
-- retraining and rollback procedures
+## Reflection
 
-## Evidence still to add
-
-- experiment tracking
-- final comparative result summary
-- model card
-- final reflection
-- deployment/MLOps discussion
+The project demonstrates that model development is only one component of AI engineering. The decision system also depends on data quality, calibration, thresholds, reproducibility, explainability, operational costs, monitoring and governance.
