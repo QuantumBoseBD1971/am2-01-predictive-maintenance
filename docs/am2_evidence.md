@@ -1,35 +1,81 @@
 # AM2 Evidence Notes
 
-This document is a working evidence map. It will be updated as the project develops.
+This document is a working evidence map and is updated as the project develops.
 
-## Evidence currently demonstrated
+## Problem framing
 
-### Problem framing
-Predictive maintenance is formulated as a supervised binary-classification problem with a rare positive class.
+Predictive maintenance is formulated as an imbalanced supervised binary-classification problem.
 
-### Data engineering
-The repository contains reproducible source acquisition, column normalisation, local persistence, and deterministic loading.
+## Data engineering
 
-### Model development
-A common preprocessing pipeline is used to benchmark both simple and nonlinear classifiers.
+The repository demonstrates reproducible source acquisition, column normalisation, local persistence, integrity checks and deterministic loading.
 
-### Evaluation
-The baseline evaluates precision, recall, F1, ROC-AUC, average precision and Brier score rather than relying on accuracy alone.
+## Exploratory analysis
 
-### Reproducibility
-Python package structure, declared dependencies, tests, fixed random seed and CI are included from the start.
+The automated EDA quantifies class prevalence, missingness, duplicates and numeric-feature distributions before model interpretation.
 
-### Responsible AI / limitations
-The selected dataset is synthetic. Model results therefore cannot be treated as evidence of safe performance on real machinery. Deployment would require representative operational data, drift monitoring, failure-cost analysis and human maintenance oversight.
+## Model development
 
-## Evidence to add
+A common preprocessing pipeline benchmarks a dummy baseline, logistic regression, random forest and gradient boosting.
 
-- EDA outputs and interpretation
-- class-imbalance analysis
-- cross-validation benchmark table
-- calibration plots
-- threshold/cost analysis
-- explainability artefacts
-- error analysis
-- model-card style limitations
-- final reflection on model choice and trade-offs
+## Evaluation
+
+The project uses:
+
+- stratified cross-validation
+- precision
+- recall
+- F1
+- ROC-AUC
+- average precision
+- Brier score
+
+This avoids using accuracy as the primary decision criterion in an imbalanced problem.
+
+## Calibration and decision thresholds
+
+The project compares uncalibrated and sigmoid-calibrated probabilities.
+
+Threshold selection is explicitly separated from model training and is driven by an illustrative false-negative vs false-positive cost ratio.
+
+## Explainability
+
+Permutation importance provides model-agnostic feature influence estimates on held-out data.
+
+## Robustness
+
+Repeated stratified hold-out splits test whether model performance is overly dependent on one random partition.
+
+## Reproducibility
+
+The project uses:
+
+- packaged Python source
+- declared dependencies
+- fixed seeds
+- tests
+- GitHub Actions CI
+- reproducible scripts
+- generated result artefacts
+
+## Responsible AI and limitations
+
+The dataset is synthetic and cannot establish real industrial safety performance.
+
+A real deployment would additionally require:
+
+- representative machinery data
+- domain-expert review
+- explicit maintenance/safety cost modelling
+- drift monitoring
+- uncertainty monitoring
+- human oversight
+- retraining and rollback procedures
+
+## Evidence still to add
+
+- experiment tracking
+- final comparative result summary
+- model card
+- final reflection
+- deployment/MLOps discussion
