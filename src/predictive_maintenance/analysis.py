@@ -25,7 +25,7 @@ def summarise_dataset(df: pd.DataFrame, target: str) -> DatasetSummary:
 
     y = df[target].astype(int)
     positives = int(y.sum())
-    rows = int(len(df))
+    rows = len(df)
 
     return DatasetSummary(
         rows=rows,
