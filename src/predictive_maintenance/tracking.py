@@ -7,9 +7,9 @@ and migrated to MLflow or another registry later if required.
 
 from __future__ import annotations
 
+import json
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
-import json
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
