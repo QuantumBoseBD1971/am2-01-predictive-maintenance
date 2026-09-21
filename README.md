@@ -65,7 +65,7 @@ python scripts/finalise_project.py
 pytest
 ```
 
-Generated outputs are written under `results/` and excluded from version control.
+Generated outputs are written under `results/` and excluded from version control. A separate manual **Run real experiment** GitHub Actions workflow can execute the complete experiment and commit a compact assessor-facing evidence pack under `evidence/`. See `docs/running_real_experiment.md`.
 
 ## Documentation
 
