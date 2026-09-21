@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "am2-predictive-maintenance"
-version = "0.1.0"
+version = "0.2.0"
 description = "Comparative machine-learning benchmark for predictive maintenance."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -13,7 +13,8 @@ dependencies = [
   "pandas>=2.2",
   "scikit-learn>=1.5",
   "ucimlrepo>=0.0.7",
-  "joblib>=1.4"
+  "joblib>=1.4",
+  "matplotlib>=3.9"
 ]
 
 [project.optional-dependencies]
