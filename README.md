@@ -8,6 +8,53 @@ This repository demonstrates an end-to-end supervised AI-engineering workflow: r
 
 > How reliably can machine-learning models identify machine-failure risk from operational measurements, and how do simple interpretable models compare with more flexible ensemble models?
 
+## Experiment status
+
+- ✅ CI passing
+- ✅ End-to-end experiment executed in GitHub Actions
+- ✅ Real metrics committed under `evidence/`
+- ✅ Calibration, thresholding, explainability and robustness evaluated
+- ✅ Model card and MLOps design documented
+
+## Key results
+
+| Result | Value |
+|---|---:|
+| Reference model | Random Forest |
+| 5-fold CV average precision | **0.9761 ± 0.0050** |
+| Calibrated average precision | **0.9784** |
+| Uncalibrated Brier score | 0.0018 |
+| Calibrated Brier score | **0.0013** |
+| Selected decision threshold | **0.05** |
+| False-negative / false-positive cost | **10 : 1** |
+| Repeated-split average precision | **0.9706 ± 0.0110** |
+
+### Calibration
+
+![Calibration curve](evidence/figures/calibration_curve.png)
+
+The calibrated Random Forest reduced the Brier score from **0.0018 to 0.0013** while maintaining strong average precision. This matters because the model is intended to support a probability-based maintenance decision rather than only produce a hard class label.
+
+### Class imbalance
+
+![Class distribution](evidence/figures/class_distribution.png)
+
+Because machine failure is rare, **accuracy is not the primary selection metric**. The project therefore emphasises average precision, recall, calibration and cost-sensitive thresholding.
+
+## What the experiment shows
+
+The Random Forest provided the strongest reference performance in the executed benchmark. Calibration improved probability quality, and a threshold of **0.05** was selected under an asymmetric cost policy where a missed failure was treated as ten times more costly than a false alarm.
+
+Permutation importance identified the strongest signals as:
+
+1. `hdf`
+2. `twf`
+3. `osf`
+4. `pwf`
+5. `tool_wear`
+
+The repeated-split average precision of **0.9706** shows that the result remained strong across multiple random splits, although the underlying dataset is synthetic and should not be treated as evidence of live industrial performance.
+
 ## Dataset
 
 Source: UCI Machine Learning Repository — AI4I 2020 Predictive Maintenance Dataset.
@@ -16,8 +63,7 @@ Source: UCI Machine Learning Repository — AI4I 2020 Predictive Maintenance Dat
 - synthetic predictive-maintenance data
 - target: `Machine failure`
 - predictors include temperatures, rotational speed, torque, tool wear and product type
-
-Dataset DOI: `10.24432/C5HS5C`
+- DOI: `10.24432/C5HS5C`
 
 The raw dataset is downloaded reproducibly and is not committed.
 
@@ -30,8 +76,6 @@ The raw dataset is downloaded reproducibly and is not committed.
 
 ## Evaluation strategy
 
-The project includes:
-
 - precision, recall and F1
 - ROC-AUC
 - average precision
@@ -42,17 +86,11 @@ The project includes:
 - permutation importance
 - repeated-split robustness checks
 
-Accuracy is deliberately not used as the primary model-selection metric because the target is imbalanced.
-
-## Quick start
+## Reproduce the experiment
 
 ```bash
 python -m venv .venv
-# Windows:
 .venv\Scripts\activate
-# macOS/Linux:
-# source .venv/bin/activate
-
 python -m pip install --upgrade pip
 pip install -e ".[dev]"
 
@@ -65,30 +103,31 @@ python scripts/finalise_project.py
 pytest
 ```
 
-Generated outputs are written under `results/` and excluded from version control. A separate manual **Run real experiment** GitHub Actions workflow can execute the complete experiment and commit a compact assessor-facing evidence pack under `evidence/`. See `docs/running_real_experiment.md`.
+The manual **Run real experiment** GitHub Actions workflow executes the full pipeline and commits a compact evidence pack.
+
+## Evidence
+
+- [Full experiment summary](evidence/RESULTS.md)
+- [Final machine-readable summary](evidence/final_project_summary.json)
+- [Evidence tables](evidence/tables/)
+- [Evidence figures](evidence/figures/)
+- [How to run the real experiment](docs/running_real_experiment.md)
 
 ## Documentation
 
-- `docs/dataset.md` — data source and leakage considerations
-- `docs/methodology.md` — baseline methodology
-- `docs/phase2_eda_benchmarking.md` — EDA and CV design
-- `docs/phase3_calibration_explainability.md` — calibration, thresholds and robustness
-- `docs/model_card.md` — intended use, limitations and risks
-- `docs/deployment_mlops.md` — productionisation, monitoring and rollback
-- `docs/final_summary.md` — concise end-to-end project summary
-- `docs/final_reflection.md` — learning and AM2 reflection
-- `docs/am2_evidence.md` — consolidated evidence map
-
-## Development status
-
-- **Phase 1 — complete:** package scaffold, reproducible data acquisition, baseline pipeline, CI and tests.
-- **Phase 2 — complete:** EDA, class imbalance and stratified cross-validation.
-- **Phase 3 — complete:** calibration, threshold/cost analysis, explainability and robustness.
-- **Phase 4 — complete:** experiment tracking, model card, MLOps design and AM2 evidence synthesis.
+- `docs/dataset.md`
+- `docs/methodology.md`
+- `docs/phase2_eda_benchmarking.md`
+- `docs/phase3_calibration_explainability.md`
+- `docs/model_card.md`
+- `docs/deployment_mlops.md`
+- `docs/final_summary.md`
+- `docs/final_reflection.md`
+- `docs/am2_evidence.md`
 
 ## Responsible use
 
-This project is educational and experimental. The dataset is synthetic, so results must not be interpreted as evidence of deployment performance on real machinery.
+This project is educational and experimental. The dataset is synthetic, so the measured performance must not be interpreted as evidence of deployment performance on real machinery.
 
 ## Licence
 
