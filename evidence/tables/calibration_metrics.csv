@@ -1,0 +1,3 @@
+model,brier_score,average_precision
+random_forest_uncalibrated,0.0018071611111111113,0.9763014316837847
+random_forest_calibrated,0.0012998886217230395,0.9784411764705883

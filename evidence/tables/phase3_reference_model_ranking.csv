@@ -1,0 +1,4 @@
+model,average_precision
+random_forest,0.9763014316837847
+gradient_boosting,0.9746363560979515
+logistic_regression,0.9716466638838104

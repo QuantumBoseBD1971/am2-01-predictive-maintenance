@@ -1,0 +1,32 @@
+{
+  "project": "am2-01-predictive-maintenance",
+  "generated_from": "local reproducible result artefacts",
+  "cross_validation": {
+    "reference_model": "random_forest",
+    "average_precision_mean": 0.9760910076509284,
+    "average_precision_std": 0.0050221688778004
+  },
+  "calibration": [
+    {
+      "model": "random_forest_uncalibrated",
+      "brier_score": 0.0018071611111111,
+      "average_precision": 0.9763014316837848
+    },
+    {
+      "model": "random_forest_calibrated",
+      "brier_score": 0.001299888621723,
+      "average_precision": 0.9784411764705884
+    }
+  ],
+  "threshold_policy": {
+    "model": "random_forest",
+    "selected_threshold": 0.05,
+    "false_negative_cost": 10.0,
+    "false_positive_cost": 1.0
+  },
+  "robustness": {
+    "average_precision_mean": 0.970603139170367,
+    "average_precision_std": 0.011030324033442495,
+    "brier_score_mean": 0.0017603088888888403
+  }
+}
